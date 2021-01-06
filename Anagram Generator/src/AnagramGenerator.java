@@ -7,7 +7,7 @@ import java.util.Hashtable;
 import java.util.Scanner;
 
 public class AnagramGenerator {
-	final static String DICTIONARY_DIRECTORY = "src/words_alpha.txt";
+	final static String DICTIONARY_DIRECTORY = "src/dictionary.csv";
 	public static Hashtable<String, ArrayList<String>> dictionary = new Hashtable<String, ArrayList<String>>();
 	public static ArrayList<String> results = new ArrayList<String>();
 	public static ArrayList<String> permutations = new ArrayList<String>();
@@ -36,6 +36,7 @@ public class AnagramGenerator {
 					System.out.println(userWord + " doesn't have any anagrams! (o_0)");
 				}
 				else {
+					clearDuplicates();
 					System.out.println(userWord + " anagrams are:\n" + results + "\n");
 					results.clear();
 				}
@@ -117,5 +118,15 @@ public class AnagramGenerator {
 		
 		Arrays.sort(tempArray);
 		return new String(tempArray);
+	}
+	
+	public static void clearDuplicates() {
+		ArrayList<String> noDupes = new ArrayList<String>();
+		for(int i = 0; i < results.size(); i++) {
+			if(!noDupes.contains(results.get(i))) {
+				noDupes.add(results.get(i));
+			}
+		}
+		results = noDupes;
 	}
 }
