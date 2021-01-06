@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Scanner;
 
@@ -64,8 +65,9 @@ public class AnagramGenerator {
 				}
 			}
 		}
-		Collections.sort(results);
-	}
+		Collections.sort(results, Comparator.comparing(String::length));	
+		Collections.reverse(results);
+		}
 	
 	static void powerSet(String str, int index, String curr) { 
 		int n = str.length(); 
