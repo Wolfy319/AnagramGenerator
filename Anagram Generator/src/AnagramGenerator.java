@@ -1,69 +1,31 @@
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.Hashtable;
 
 public class AnagramGenerator {
 	final static String DICTIONARY_DIRECTORY = "src/dictionary.csv"; // Directory of dictionary file
 	public static TrieNode root;
 	public static ArrayList<String> results = new ArrayList<String>(); // All anagrams possible from userWord
-	
-	// Main method
-	public static void main(String[] args)  throws FileNotFoundException {
-		// Initialize dictionary
-		root = Dictionary.createDictionary(DICTIONARY_DIRECTORY);
-		// Accept user input
-		acceptInput();
-	} // End main
-	
-	// Accepts user input and parses
-	public static void acceptInput() {
-		Scanner scnr = new Scanner(System.in);
-		String userWord;
-		
-		// Continuously ask for user input until user decides to quit
-		boolean running = true;
-		do {
-			System.out.println("Enter 29 or less letters or press q to quit");
-			userWord = scnr.nextLine();
-			
-			// Quit if user enters "q"
-			if(userWord.replaceAll(" ", "").equals("q")) {
-				System.out.println("Quitting program now. Goodbye! (^_^)/~");
-				running = false;
-			}
-			// Make sure word is under character limit
-			else if(userWord.length() > 29) {
-				System.out.println("More than 29 characters entered. Please re-enter letters");
-			}
-			// Otherwise, find all anagrams of their word
-			else {
-				anagramize(userWord);
-				
-				if(results.size() == 0) {
-					System.out.println(userWord + " doesn't have any anagrams! (o_0)");
-				}
-				else {
-					// Remove all duplicate words and print all anagrams
-					clearDuplicates();
-					System.out.println(userWord + " anagrams are:\n" + results + "\n");
-					// Clear all anagrams so next word can be processed
-					results.clear();
-				}
-			}
-		} while(running);
-		scnr.close();
-	} // End acceptInput()
+	public static Hashtable<Integer, ArrayList<String>> organizedWords = 
+			new Hashtable<Integer, ArrayList<String>>(); // Table of word length lists
+	public static long time; // Time taken to search for anagrams
 	
 	// Produces all anagrams of word and adds them to result
 	public static void anagramize(String word) {
+		results.clear();
 		// Searches through all permutations of word to find anagrams
+		long start = System.currentTimeMillis();
 		recursiveSearch(word, root);
-		// Sort all results by length in descending order
-		Collections.sort(results, Comparator.comparing(String::length));	
-		Collections.reverse(results);
-	} // End anagramize()
+		long end = System.currentTimeMillis();
+		
+		// Time taken searching
+		time = end - start;
+		System.out.print(time + "ms");
+		
+		// Clear all duplicates and format results
+		clearDuplicates();
+		organizedWords = organizeWords();
+		
+	}
 	
 	// Searches all permutations of a word against the dictionary
 	public static void recursiveSearch(String word, TrieNode currNode) {
@@ -94,7 +56,7 @@ public class AnagramGenerator {
 			}
 		}
 		return;
-	} // End recursiveSearch()
+	} 
 	
 	// Removes all duplicates from a list of words
 	public static void clearDuplicates() {
@@ -109,5 +71,25 @@ public class AnagramGenerator {
 		}
 		// New list with no duplicates
 		results = noDupes;
-	} // End clearDuplicates()
+	} 
+	
+	// Sorts words into lists of words of the same length
+	public static Hashtable<Integer, ArrayList<String>> organizeWords() {
+		// Make a table for strings of different lengths
+		Hashtable<Integer, ArrayList<String>> lists = new Hashtable<Integer,ArrayList<String>>();
+		
+		// Iterate through all results
+		for(int k = 0; k < results.size(); k++) {
+			// If there is already list of words of current word size, add word to list
+			if(lists.containsKey(results.get(k).length())) {
+				lists.get(results.get(k).length()).add(results.get(k));
+			}
+			// Otherwise initiate a list and add word
+			else {
+				lists.put(results.get(k).length(), new ArrayList<String>());
+				lists.get(results.get(k).length()).add(results.get(k));
+			}
+		}
+		return lists;
+	} 
 }
