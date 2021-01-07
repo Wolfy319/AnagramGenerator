@@ -1,4 +1,5 @@
 /bin/
+/.classpath
 miglayout15-swing.jar
 miglayout-src.zip
 .classpath
