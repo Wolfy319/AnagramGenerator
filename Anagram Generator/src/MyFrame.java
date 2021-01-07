@@ -139,7 +139,7 @@ public class MyFrame extends JFrame {
 				
 				// Generate output string
 				// Iterate through all possible sizes of words
-				for(int i = generator.results.size() - 1; i >= generator.results.get(0).length(); i--) {
+				for(int i = generator.organizedWords.size() - 1; i >= 0; i--) {
 					// If list of words with length == i are found, add to output string
 					if(generator.organizedWords.get(i) != null) {
 						allAnagrams += (i + " Letter Words - " 
