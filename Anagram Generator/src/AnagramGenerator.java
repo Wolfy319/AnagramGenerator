@@ -25,13 +25,17 @@ public class AnagramGenerator {
 		// Continuously ask for user input until user decides to quit
 		boolean running = true;
 		do {
-			System.out.println("Enter word or press q to quit");
+			System.out.println("Enter 29 or less letters or press q to quit");
 			userWord = scnr.nextLine();
 			
 			// Quit if user enters "q"
 			if(userWord.replaceAll(" ", "").equals("q")) {
 				System.out.println("Quitting program now. Goodbye! (^_^)/~");
 				running = false;
+			}
+			// Make sure word is under character limit
+			else if(userWord.length() > 29) {
+				System.out.println("More than 29 characters entered. Please re-enter letters");
 			}
 			// Otherwise, find all anagrams of their word
 			else {
