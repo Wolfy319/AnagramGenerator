@@ -1,5 +1,5 @@
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,8 +14,9 @@ public class AnagramGenerator {
 	public static ArrayList<String> permutations = new ArrayList<String>();
 
 
-	public static void main(String[] args) throws FileNotFoundException {
-		createDictionary();
+	public static void main(String[] args)  throws FileNotFoundException {
+		Dictionary dict = new Dictionary(DICTIONARY_DIRECTORY);
+		dictionary = dict.dictionary;
 		acceptInput();
 	}
 	
@@ -95,26 +96,7 @@ public class AnagramGenerator {
 		} 
 		return;
 	} 
-	
-	public static void createDictionary() throws FileNotFoundException {
-		Scanner file = new Scanner(new File(DICTIONARY_DIRECTORY));
-		String currWord;
-		
-		while(file.hasNextLine()) {
-			currWord = file.nextLine();
-			if(dictionary.get(sortString(currWord)) == null) {
-				ArrayList<String> list = new ArrayList<String>();
-				list.add(currWord);
-				dictionary.put(sortString(currWord), list);
-			}
-			else {
-				dictionary.get(sortString(currWord)).add(currWord);
-			}
-		}
-		
-		file.close();
-	}
-	
+
 	public static String sortString(String word) {
 		char[] tempArray = word.toCharArray();
 		
