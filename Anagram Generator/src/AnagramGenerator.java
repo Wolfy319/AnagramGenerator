@@ -4,15 +4,14 @@ import java.util.Hashtable;
 public class AnagramGenerator {
 	
 	final static String DICTIONARY_DIRECTORY = "src/dictionary.csv"; // Directory of dictionary file
-	public static TrieNode root;
-	public static ArrayList<String> results = new ArrayList<String>(); // All anagrams possible from userWord
-	public static Hashtable<Integer, ArrayList<String>> organizedWords = 
-			new Hashtable<Integer, ArrayList<String>>(); // Table of word length lists
-	public static long time; // Time taken to search for anagrams
+	TrieNode root;
+	ArrayList<String> results = new ArrayList<String>(); // All anagrams possible from userWord
+	Hashtable<Integer, ArrayList<String>> organizedWords = new Hashtable<Integer, ArrayList<String>>(); // Table of word length lists
+	long time; // Time taken to search for anagrams
 	
 	
 	// Produces all anagrams of word and adds them to result
-	public static void anagramize(String word) {
+	void anagramize(String word) {
 		results.clear();
 		word = word.toLowerCase();
 		// Searches through all permutations of word to find anagrams
@@ -31,7 +30,7 @@ public class AnagramGenerator {
 	}
 	
 	// Searches all permutations of a word against the dictionary
-	public static void recursiveSearch(String word, TrieNode currNode) {
+	void recursiveSearch(String word, TrieNode currNode) {
 		String tempWord;
 		int n = word.length();
 		
@@ -62,7 +61,7 @@ public class AnagramGenerator {
 	} 
 	
 	// Removes all duplicates from a list of words
-	public static void clearDuplicates() {
+	void clearDuplicates() {
 		ArrayList<String> noDupes = new ArrayList<String>();
 		// Iterate through results list
 		for(int i = 0; i < results.size(); i++) {
@@ -77,10 +76,9 @@ public class AnagramGenerator {
 	} 
 	
 	// Sorts words into lists of words of the same length
-	public static Hashtable<Integer, ArrayList<String>> organizeWords() {
+	Hashtable<Integer, ArrayList<String>> organizeWords() {
 		// Make a table for strings of different lengths
 		Hashtable<Integer, ArrayList<String>> lists = new Hashtable<Integer,ArrayList<String>>();
-		String upperCase;
 		
 		// Iterate through all results
 		for(int k = 0; k < results.size(); k++) {

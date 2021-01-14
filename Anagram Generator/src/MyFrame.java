@@ -13,15 +13,14 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Hashtable;
 import java.util.prefs.Preferences;
 
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class MyFrame extends JFrame implements ItemListener, ActionListener{
+	private static final long serialVersionUID = 1L;
 	static AnagramGenerator generator = new AnagramGenerator();
 	JPanel contentPane;
 	JPanel anagramHeadPanel = new JPanel();
