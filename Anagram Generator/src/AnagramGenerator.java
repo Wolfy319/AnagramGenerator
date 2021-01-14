@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class AnagramGenerator {
+	
 	final static String DICTIONARY_DIRECTORY = "src/dictionary.csv"; // Directory of dictionary file
 	public static TrieNode root;
 	public static ArrayList<String> results = new ArrayList<String>(); // All anagrams possible from userWord
@@ -9,9 +10,11 @@ public class AnagramGenerator {
 			new Hashtable<Integer, ArrayList<String>>(); // Table of word length lists
 	public static long time; // Time taken to search for anagrams
 	
+	
 	// Produces all anagrams of word and adds them to result
 	public static void anagramize(String word) {
 		results.clear();
+		word = word.toLowerCase();
 		// Searches through all permutations of word to find anagrams
 		long start = System.currentTimeMillis();
 		recursiveSearch(word, root);
@@ -77,6 +80,7 @@ public class AnagramGenerator {
 	public static Hashtable<Integer, ArrayList<String>> organizeWords() {
 		// Make a table for strings of different lengths
 		Hashtable<Integer, ArrayList<String>> lists = new Hashtable<Integer,ArrayList<String>>();
+		String upperCase;
 		
 		// Iterate through all results
 		for(int k = 0; k < results.size(); k++) {
